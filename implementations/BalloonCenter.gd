@@ -48,7 +48,7 @@ func _input(input_dir: Vector2, nodes: Array[Control], current_node: Control) ->
 	if _print_scores: candidate.print_score()
 	for node in nodes:
 		add_draw_point(node.get_global_rect().get_center(), Color.AQUA)
-		var node_distance = node.get_global_rect().get_center() - control_rect.get_center()
+		var node_distance = node.get_global_rect().get_center() - starting_point
 		var other_candidate = Candidate.new(
 			node,
 			node.get_global_rect().get_center(),
