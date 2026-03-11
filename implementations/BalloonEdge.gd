@@ -8,15 +8,16 @@ extends BalloonImplementation
 func friendly_name() -> String:
 	return "Balloon (with edge points)"
 
-func calculate_candidate_point(starting_point: Vector2, input_dir: Vector2, candidate_rect: Rect2) -> Vector2:
+func calculate_candidate_point(starting_point: Vector2, input_dir: Vector2, candidate_rect: Rect2, candidate_transform: Transform2D) -> Vector2:
 	var score := -1e10
 	var touch := Vector2.ZERO
+	
 
 	# The four corners of the rect
-	var PA : Vector2 = candidate_rect.position
-	var PB : Vector2 = Vector2(candidate_rect.end.x, candidate_rect.position.y)
-	var PC : Vector2 = candidate_rect.end
-	var PD : Vector2 = Vector2(candidate_rect.position.x, candidate_rect.end.y)
+	var PA : Vector2 = candidate_transform * candidate_rect.position
+	var PB : Vector2 = candidate_transform * Vector2(candidate_rect.end.x, candidate_rect.position.y)
+	var PC : Vector2 = candidate_transform * candidate_rect.end
+	var PD : Vector2 = candidate_transform * Vector2(candidate_rect.position.x, candidate_rect.end.y)
 
 	# Iterative version of original lambda based algorithm, because
 	# Godot lambdas apparently can't modify variables

@@ -6,6 +6,12 @@ extends BalloonImplementation
 func friendly_name() -> String:
 	return "Balloon (with edge-toward-center points)"
 
-func calculate_candidate_point(starting_point: Vector2, input_dir: Vector2, candidate_rect: Rect2) -> Vector2:
-	var node_dir = starting_point - candidate_rect.get_center()
-	return intersect_rect_with_dir(candidate_rect, candidate_rect.get_center(), node_dir)
+func calculate_candidate_point(starting_point: Vector2, input_dir: Vector2, candidate_rect: Rect2, candidate_transform: Transform2D) -> Vector2:
+	candidate_rect.position += candidate_transform.origin
+	
+	var center = candidate_rect.get_center()
+	var node_dir = starting_point - center
+	var candidate_point = intersect_rect_with_dir(candidate_rect, center, node_dir)
+	candidate_point -= candidate_transform.origin
+	candidate_point = candidate_transform * candidate_point
+	return candidate_point
